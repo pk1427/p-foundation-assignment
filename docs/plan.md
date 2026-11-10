@@ -26,7 +26,7 @@
 
 ## 3. Key decisions
 
-1. **Format of prototypes:** build both designs as live, responsive web pages (single-file HTML/Tailwind or a Lovable/Replit build), deployed to a public URL. This shows design and technical skill at once, and a link is easier for the founder to open than a Figma file. Add a Figma frame or screenshot set only if time remains.
+1. **Format of prototypes:** build both designs as live, responsive Next.js pages deployed to a public URL (one Vercel project, two routes: `/` and `/ai-course`). This shows design and technical skill at once, and a link is easier for the founder to open than a Figma file. Add a Figma frame or screenshot set only if time remains.
 2. **Carousel:** make it about something that proves the system works and is on-brand for Pawzz, for example "5 signs your pet needs a vet visit" (ties to Task 1). Produce it end to end through the proposed workflow and keep screenshots of each stage as evidence.
 3. **Single deliverable doc:** one short README/PDF with links, the tool stack, CTA table, and the workflow diagram.
 4. **Brand:** warm, trustworthy, friendly palette for the animal-care product; a separate, more modern/techy look for the AI education page so the two feel like distinct products.

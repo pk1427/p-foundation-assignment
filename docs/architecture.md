@@ -71,7 +71,8 @@ Lead/Listing(id, business_name, category, contact, status)
 ```
 
 ### Prototype stack
-Responsive HTML + Tailwind (or Lovable/Replit) with a JSON file of sample providers driving the cards and filters; deployed to Vercel or Netlify. A production MVP would use Next.js, Postgres with PostGIS, Google Maps API, and an admin panel.
+
+Next.js 16 (App Router), TypeScript, Tailwind CSS v4, zod-validated Route Handlers forwarding to env webhook URLs (`LEAD_WEBHOOK_URL`, `CORRECTION_WEBHOOK_URL`, `LISTING_WEBHOOK_URL`); deployed to Vercel with zero config. A production MVP would add Postgres with PostGIS, Google Maps API, and an admin panel.
 
 ---
 
@@ -173,13 +174,27 @@ One carousel produced through steps 1-7, with screenshots of the prompt, the str
 
 ## Deployment and repo layout
 
+Single Next.js app (App Router) deployed to one Vercel project with two routes:
+
 ```
-/
+/                     Practo for Animals (homepage, /search, /provider/[id], /list-your-business, /submit-correction)
+/ai-course            AI course landing page
+
+Repo layout:
 |- plan.md
 |- architecture.md
 |- implementation.md
 |- README.md          (final write-up with links)
-|- practo-animals/    (Task 1 prototype)
-|- ai-course/         (Task 2 prototype)
-|- carousel/          (copy, prompts, exported slides, workflow diagram)
+|- .env.example
+|- next.config.ts
+|- package.json
+|- src/
+|  |- app/(practo)/...   Practo for Animals routes
+|  |- app/(course)/ai-course/  AI course route
+|  |- app/api/lead, /api/correction, /api/listing  Route Handlers
+|  |- components/, data/, lib/
+|- public/syllabus.pdf
+|- docs/              (assignment docs)
 ```
+
+Deploy to Vercel (zero config, Next.js preset). Env vars: `LEAD_WEBHOOK_URL`, `CORRECTION_WEBHOOK_URL`, `LISTING_WEBHOOK_URL`. The carousel workflow (Part 3) lives outside this codebase.

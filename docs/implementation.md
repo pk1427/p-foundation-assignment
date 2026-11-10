@@ -5,8 +5,8 @@ Work top to bottom. Each step has a time box and a "done when" check.
 ## Step 0: Setup (15 min)
 - [ ] Create a repo/folder with the layout from `architecture.md`.
 - [ ] Pick a palette and fonts for each product (see below) and note them in README.md.
-- [ ] Choose how to build the prototypes (recommended: single-file HTML + Tailwind CDN, or Lovable for faster iteration).
-- [ ] Create free accounts if missing: Vercel/Netlify, Canva, Make or n8n, Google Sheets.
+- [ ] Choose how to build the prototypes (Next.js App Router + TypeScript + Tailwind CSS v4, single app with two route groups).
+- [ ] Create free accounts if missing: Vercel.
 
 **Suggested style**
 - Practo for Animals: warm teal/green primary, soft cream background, rounded cards, friendly illustration style, clear status colours (open = green, closed = grey, emergency = red).
@@ -20,10 +20,10 @@ Work top to bottom. Each step has a time box and a "done when" check.
 
 1. **Reference scan (10 min):** look at Practo, Zomato, and a pet-services marketplace; note patterns for search, filters and cards.
 2. **Wireframe (15 min):** sketch mobile and desktop on paper or Figma: homepage, results, profile.
-3. **Sample data (10 min):** create `providers.json` with 12-15 realistic, clearly fictional providers across all six categories (include a 24x7 hospital, ambulance, NGO, boarding).
+3. **Sample data (10 min):** create `src/data/providers.ts` with 12-15 realistic, clearly fictional providers across all six categories (include a 24x7 hospital, ambulance, NGO, boarding).
 4. **Build homepage (30 min):** header, hero with search and **Find a Vet**, category tiles with **Explore Services**, emergency strip, featured providers, how it works, trust section with **Submit a Correction**, **List Your Business** banner, footer.
 5. **Build results page (25 min):** working filters (category, open now, 24x7, species, distance), sort, provider cards with Call/Directions, map placeholder or embedded map, mobile bottom-sheet filters.
-6. **Mini flows (10 min):** a profile view, a **List Your Business** form modal, and a **Submit a Correction** form modal (non-functional or posting to a sheet).
+6. **Mini flows (10 min):** a profile view, a **List Your Business** form posting to `/api/listing`, and a **Submit a Correction** form posting to `/api/correction` (Route Handlers with zod validation).
 
 **Done when:** the page works on a phone-width viewport, filters change the results, and every CTA leads somewhere sensible.
 

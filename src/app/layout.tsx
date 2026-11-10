@@ -8,6 +8,17 @@ const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin
 export const metadata: Metadata = {
   title: "Pawzz Care — Practo for Animals",
   description: "Find trusted veterinary clinics, animal hospitals, boarding, diagnostics, ambulances and rescue NGOs near you.",
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
+  openGraph: {
+    title: "Pawzz Care — Practo for Animals",
+    description:
+      "Find trusted veterinary clinics, animal hospitals, boarding, diagnostics, ambulances and rescue NGOs near you.",
+    images: [{ url: "/og-practo.svg" }],
+    type: "website",
+  },
 };
 
 export default function RootLayout({
