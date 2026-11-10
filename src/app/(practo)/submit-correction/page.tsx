@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { getProviderById } from "@/lib/providers";
 import { CorrectionDialog } from "@/components/practo/correction-dialog";
 import { ToastProvider } from "@/components/practo/toast";
+import { Container, Section, SectionHeader } from "@/components/practo/layout";
+import Link from "next/link";
 
 export default function SubmitCorrectionPage() {
   const [providerId, setProviderId] = useState<string | undefined>(undefined);
@@ -19,29 +21,31 @@ export default function SubmitCorrectionPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-var(--header-height, 64px))]">
-      <main className="flex-grow">
-        <ToastProvider>
-          <div className="px-4 lg:px-6 py-10 max-w-md mx-auto">
-            <div className="rounded-2xl border border-practo-border bg-practo-surface p-8">
-              <h1 className="text-2xl font-bold text-practo-text mb-2">
-                Submit a Correction
-              </h1>
-              <p className="text-sm text-practo-text-muted mb-6">
-                Spot outdated info on a listing? Let us know and our team will
-                review it.
-              </p>
+    <div className="flex flex-col min-h-[calc(100vh-var(--header-height, 64px))]">
+      <Section className="py-6 sm:py-8 lg:py-12">
+        <Container>
+          <SectionHeader
+            eyebrow="Help us improve"
+            title="Submit a Correction"
+            subtitle={
+              providerId
+                ? "Spot outdated info on this listing? Let us know and our team will review it."
+                : "No provider selected. Browse providers to submit a correction."
+            }
+          />
+          <ToastProvider>
+            <div className="rounded-2xl border border-practo-border bg-practo-surface p-4 sm:p-6 shadow-soft">
               {providerId ? (
                 <CorrectionDialog providerId={providerId} />
               ) : (
                 <p className="text-sm text-practo-text-muted">
-                  No provider selected. <a href="/search" className="text-practo-primary underline underline-offset-4">Browse providers</a>.
+                  No provider selected. <Link href="/search" className="text-practo-primary underline underline-offset-4">Browse providers</Link>.
                 </p>
               )}
             </div>
-          </div>
-        </ToastProvider>
-      </main>
+          </ToastProvider>
+        </Container>
+      </Section>
     </div>
   );
 }

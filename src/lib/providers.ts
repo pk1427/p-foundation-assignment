@@ -3,8 +3,8 @@ import { PROVIDERS } from "@/data/providers";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
 const EARTH_RADIUS_KM = 6371;
-export const DEFAULT_LAT = 12.9716;
-export const DEFAULT_LNG = 77.5946;
+export const DEFAULT_LAT = 28.4595;
+export const DEFAULT_LNG = 77.0266;
 
 function toRad(d: number) {
   return (d * Math.PI) / 180;

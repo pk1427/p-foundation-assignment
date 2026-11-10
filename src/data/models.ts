@@ -129,11 +129,13 @@ export interface ProviderFilters {
   category?: string;
   species?: string;
   openNow?: string;
+  open24x7?: string;
   is24x7?: string;
   emergency?: string;
   ambulance?: string;
   homeVisit?: string;
   verifiedOnly?: string;
+  where?: string;
   distance?: string;
   sort?: string;
   q?: string;

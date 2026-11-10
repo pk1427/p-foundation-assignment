@@ -4,7 +4,6 @@ import {
   MapPin,
   Star,
   ShieldCheck,
-  ChevronRight,
   Stethoscope,
   Hospital,
   Bed,
@@ -27,6 +26,15 @@ const ICON_BY_CATEGORY: Record<string, React.ElementType> = {
   "ngo-rescue": HandHeart,
 };
 
+const CATEGORY_TINT: Record<string, string> = {
+  "veterinary-clinics": "bg-practo-sage",
+  "animal-hospitals": "bg-practo-rose",
+  "boarding-daycare": "bg-practo-amber-light",
+  "diagnostics-labs": "bg-indigo-50",
+  ambulances: "bg-practo-emergency-tint",
+  "ngo-rescue": "bg-purple-50",
+};
+
 interface ProviderCardProps {
   provider: Provider;
   userLat?: number;
@@ -41,6 +49,7 @@ export default function ProviderCard({
   showDistance = true,
 }: ProviderCardProps) {
   const PhotoIcon = ICON_BY_CATEGORY[provider.category];
+  const tint = CATEGORY_TINT[provider.category] ?? "bg-practo-primary-light";
   const distance =
     userLat != null && userLng != null
       ? distanceKm(userLat, userLng, provider.lat, provider.lng)
@@ -49,98 +58,115 @@ export default function ProviderCard({
     provider.address
   )}`;
   const telUrl = `tel:${provider.phone}`;
+  const remaining = provider.services.length - 3;
 
   return (
-    <article
+    <Link
+      href={`/provider/${provider.id}`}
       className={cn(
-        "bg-practo-surface border border-practo-border rounded-2xl p-5 shadow-soft",
-        "hover:shadow-card transition-all duration-200 group"
+        "flex flex-col h-full rounded-xl border border-practo-border bg-practo-surface shadow-soft hover:shadow-card-hover transition-all duration-200 group",
+        provider.is24x7 ? "border-practo-emergency/30" : ""
       )}
+      aria-label={`View profile for ${provider.name}`}
     >
-      <div className="relative h-36 rounded-xl overflow-hidden mb-4 flex items-center justify-center bg-practo-primary-light">
-        <PhotoIcon className="w-12 h-12 text-practo-primary" />
+      {/* Header area */}
+      <div className={cn("relative h-32 rounded-t-xl overflow-hidden flex items-center justify-center", tint)}>
+        <div className="absolute inset-0 bg-white/40" aria-hidden="true" />
+        <PhotoIcon className="w-10 h-10 text-practo-primary" />
         {provider.is24x7 && (
-          <span className="absolute top-3 right-3 rounded-full bg-practo-emergency text-white px-2.5 py-0.5 text-[10px] font-bold tracking-tight">
-            24x7
+          <span className="absolute top-2 right-2 rounded-full bg-practo-emergency text-white px-2 py-0.5 text-[10px] font-bold tracking-tight shadow-sm">
+            24×7
           </span>
         )}
-      </div>
-
-      <Link href={`/provider/${provider.id}`} className="block">
-        <h3 className="font-bold text-practo-text leading-tight">{provider.name}</h3>
-        <p className="text-xs text-practo-text-muted truncate">{provider.address}</p>
-      </Link>
-
-      <div className="flex items-center gap-3 mb-3">
-        <OpenStatusBadge provider={provider} />
         {provider.verified && (
-          <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold bg-practo-primary/10 text-practo-primary border border-practo-primary/20">
-            <ShieldCheck className="w-3 h-3" /> Verified
-          </span>
-        )}
-        {showDistance && distance != null && (
-          <span className="ml-auto text-xs text-practo-text-muted">
-            {distance.toFixed(1)} km
+          <span className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-white text-practo-primary px-2 py-0.5 text-[10px] font-bold shadow-sm">
+            <ShieldCheck className="w-3 h-3" />
+            Verified
           </span>
         )}
       </div>
 
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-1.5">
-          <Star className="w-4 h-4 fill-yellow-400 text-yellow-500" />
-          <span className="text-sm font-bold text-practo-text">
-            {provider.rating}
-          </span>
-          <span className="text-xs text-practo-text-muted">({provider.reviewCount})</span>
+      {/* Body */}
+      <div className="flex-1 p-4 flex flex-col">
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="font-bold text-practo-text line-clamp-2 leading-snug">{provider.name}</h3>
+          <div className="flex items-center gap-1.5">
+            <Star className="w-4 h-4 fill-yellow-400 text-yellow-500 shrink-0" />
+            <span className="font-bold text-practo-text text-sm shrink-0">
+              {provider.rating}
+            </span>
+          </div>
         </div>
-        <div className="text-right">
-          <p className="text-xs font-bold text-practo-text">{provider.priceBand}</p>
-          <p className="text-[10px] text-practo-text-muted">indicative</p>
-        </div>
-      </div>
+        <p className="text-xs text-practo-text-muted line-clamp-1" title={provider.address}>
+          <MapPin className="w-3 h-3 mr-1 shrink-0" />
+          {provider.address.split(",").slice(0, 2).join(",")}
+        </p>
 
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {provider.services.slice(0, 4).map((s) => (
+        <div className="mt-3 flex flex-wrap gap-2">
+          <OpenStatusBadge provider={provider} />
+          {showDistance && distance != null && (
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded border border-practo-border/40 bg-practo-surface/50 text-[10px] font-medium text-practo-text-muted">
+              <MapPin className="w-3 h-3 shrink-0" />
+              {distance.toFixed(1)} km
+            </span>
+          )}
           <span
-            key={s}
-            className="px-2 py-1 rounded border border-practo-border/50 text-[10px] font-medium text-practo-text-muted bg-practo-primary/5"
+            className={cn(
+              "inline-flex items-center gap-1 px-2 py-1 rounded border bg-white text-[10px] font-medium shadow-sm",
+              provider.priceBand === "₹₹₹"
+                ? "border-amber-200 text-practo-amber bg-amber-50"
+                : "border-practo-border/40 text-practo-text-muted bg-practo-surface/50"
+            )}
           >
-            {s}
+            {provider.priceBand}
+            <span className="sr-only">indicative pricing</span>
           </span>
-        ))}
+        </div>
+
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {provider.services.slice(0, 3).map((s) => (
+            <span
+              key={s}
+              className="px-2 py-1 rounded border border-practo-border/50 text-[10px] font-medium text-practo-text-muted bg-practo-primary/5"
+            >
+              {s}
+            </span>
+          ))}
+          {remaining > 0 && (
+            <span className="px-2 py-1 rounded border border-practo-border/50 text-[10px] font-medium text-practo-text-muted bg-practo-primary/5">
+              +{remaining} more
+            </span>
+          )}
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
-        <Button
-          href={telUrl}
-          variant="outline"
-          size="sm"
-          className="w-full min-h-[44px]"
-          aria-label={`Call ${provider.name}`}
-        >
-          <Phone className="w-4 h-4 mr-1.5" />
-          Call
-        </Button>
-        <Button
-          href={mapsUrl}
-          variant="outline"
-          size="sm"
-          className="w-full min-h-[44px]"
-          target="_blank"
-          rel="noopener"
-          aria-label={`Directions to ${provider.name}`}
-        >
-          <MapPin className="w-4 h-4 mr-1.5" />
-          Directions
-        </Button>
+      {/* Actions pinned to bottom */}
+      <div className="border-t border-practo-border/40 p-3">
+        <div className="grid grid-cols-2 gap-2">
+          <Button
+            href={telUrl}
+            variant="primary"
+            size="sm"
+            className="w-full"
+            aria-label={`Call ${provider.name}`}
+          >
+            <Phone className="w-4 h-4 shrink-0" />
+            Call
+          </Button>
+          <Button
+            href={mapsUrl}
+            variant="outline"
+            size="sm"
+            className="w-full"
+            target="_blank"
+            rel="noopener"
+            aria-label={`Directions to ${provider.name}`}
+          >
+            <MapPin className="w-4 h-4 shrink-0" />
+            Directions
+          </Button>
+        </div>
       </div>
-
-      <Link
-        href={`/provider/${provider.id}`}
-        className="mt-3 block text-center text-xs font-semibold text-practo-primary underline underline-offset-4 hover:text-practo-primary-hover flex items-center justify-center gap-1"
-      >
-        View profile <ChevronRight className="w-3 h-3" />
-      </Link>
-    </article>
+    </Link>
   );
 }

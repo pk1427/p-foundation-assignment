@@ -4,17 +4,38 @@
   /* Practo for Animals — warm teal/green on cream */
   --color-practo-primary: #0f766e;
   --color-practo-primary-hover: #115e59;
-  --color-practo-primary-light: #ccfbf1;
   --color-practo-bg: #fdfaf7;
   --color-practo-surface: #ffffff;
   --color-practo-text: #2d3736;
   --color-practo-text-muted: #6b7280;
   --color-practo-border: #e7e5e4;
   --color-practo-emergency: #b91c1c;
+  --color-practo-emergency-tint: #fef2f2;
   --color-practo-open: #15803d;
   --color-practo-open-light: #dcfce7;
   --color-practo-closed: #64748b;
   --color-practo-verified: #0f766e;
+
+  /* New accent and surface tokens */
+  --color-practo-amber: #d97706;
+  --color-practo-amber-light: #fef3c7;
+  --color-practo-sage: #ecfdf5;
+  --color-practo-rose: #fce7f3;
+  --color-practo-ink: #111827;
+
+  /* Radius */
+  --radius-card: 20px;
+  --radius-pill: 9999px;
+  --radius-sm: 8px;
+
+  /* Shadows */
+  --shadow-soft: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --shadow-card: 0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-card-hover: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+
+  /* Spacing */
+  --spacing-section-y: 6rem;
+  --spacing-section-x: 1.5rem;
 
   /* AI course — dark indigo base, one bright accent */
   --color-course-bg: #0b1022;
@@ -24,15 +45,6 @@
   --color-course-text: #f8fafc;
   --color-course-text-muted: #94a3b8;
   --color-course-border: rgba(255, 255, 255, 0.10);
-
-  /* Tokens */
-  --radius-card: 16px;
-  --radius-pill: 9999px;
-  --shadow-soft: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
-  --shadow-card: 0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-  --shadow-glow: 0 0 24px rgba(34, 211, 238, 0.15);
-  --spacing-section-y: 5rem;
-  --spacing-section-x: 1.5rem;
 }
 
 html {
@@ -64,4 +76,16 @@ button {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Utility helpers for the redesign */
+.text-balance {
+  text-wrap: balance;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
