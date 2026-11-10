@@ -1,11 +1,9 @@
 import { ShieldCheck, Clock, Users } from "lucide-react";
 import { ListingForm } from "@/components/practo/listing-form";
-import { PractoHeader, PractoFooter } from "@/components/practo/layout-components";
 
 export default function ListYourBusinessPage() {
   return (
     <div className="min-h-[calc(100vh-var(--header-height, 64px))]">
-      <PractoHeader />
       <main className="flex-grow">
         <div className="px-4 lg:px-6 py-10 max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-practo-text mb-3">
@@ -61,7 +59,6 @@ export default function ListYourBusinessPage() {
           </section>
         </div>
       </main>
-      <PractoFooter />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import { getProviderById } from "@/lib/providers";
 import { CorrectionDialog } from "@/components/practo/correction-dialog";
-import { PractoHeader, PractoFooter } from "@/components/practo/layout-components";
 import { ToastProvider } from "@/components/practo/toast";
 
 export default function SubmitCorrectionPage() {
@@ -21,7 +20,6 @@ export default function SubmitCorrectionPage() {
 
   return (
     <div className="min-h-[calc(100vh-var(--header-height, 64px))]">
-      <PractoHeader />
       <main className="flex-grow">
         <ToastProvider>
           <div className="px-4 lg:px-6 py-10 max-w-md mx-auto">
@@ -44,7 +42,6 @@ export default function SubmitCorrectionPage() {
           </div>
         </ToastProvider>
       </main>
-      <PractoFooter />
     </div>
   );
 }

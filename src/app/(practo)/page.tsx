@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { SearchBar } from "@/components/practo/search-bar";
 import ProviderCard from "@/components/practo/provider-card";
-import { PractoHeader, PractoFooter } from "@/components/practo/layout-components";
 import { getFeatured, providersByCategory, DEFAULT_LAT, DEFAULT_LNG } from "@/lib/providers";
 import { CATEGORIES } from "@/data/models";
 import { Button } from "@/components/shared/button";
@@ -36,8 +35,6 @@ const ngo = providersByCategory("ngo-rescue")[0];
 export default function PractoHome() {
   return (
     <div className="flex flex-col">
-      <PractoHeader />
-
       {/* Hero */}
       <section className="relative overflow-hidden" aria-label="Hero">
         <div className="absolute inset-0 -z-10" aria-hidden="true">
@@ -351,9 +348,7 @@ export default function PractoHome() {
             </Link>
           </div>
         </div>
-      </section>
-
-      <PractoFooter />
-    </div>
-  );
+        </section>
+      </div>
+    );
 }
