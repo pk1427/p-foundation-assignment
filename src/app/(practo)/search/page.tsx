@@ -1,4 +1,4 @@
-import { Search, MapPin, Layout, LayoutGrid, Clock, X } from "lucide-react";
+import { Search, Layout, LayoutGrid, Clock, X } from "lucide-react";
 import { FilterTrigger } from "@/components/practo/filter-trigger";
 import ProviderCard from "@/components/practo/provider-card";
 import { filterProviders, sortProviders, DEFAULT_LAT, DEFAULT_LNG } from "@/lib/providers";
@@ -130,6 +130,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
 
           <FilterTrigger
+            className="hidden lg:block"
             current={filters}
             activeCount={activeCount}
           />
@@ -326,14 +327,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           {view === "map" ? (
             <div className="grid lg:grid-cols-12 gap-6">
               <div className="lg:col-span-5 flex flex-col gap-4">
-                <div className="rounded-2xl border border-practo-border h-[400px] relative overflow-hidden flex items-center justify-center bg-practo-primary/5">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-practo-text-muted/50 mx-auto mb-2" />
-                    <p className="text-sm text-practo-text-muted">
-                      Map placeholder — pins positioned from provider coordinates
-                    </p>
-                  </div>
-                </div>
+                <MapSvg providers={sorted} />
                 <div className="absolute bottom-4 right-4 z-10 hidden lg:block">
                   <a
                     href={buildURL({ ...filters, openNow: "1", is24x7: "1" })}
@@ -401,6 +395,97 @@ function EmptyState() {
       >
         Clear all filters
       </a>
+    </div>
+  );
+}
+
+function MapSvg({ providers }: { providers: typeof PROVIDERS }) {
+  if (providers.length === 0) {
+    return (
+      <div className="rounded-2xl border border-practo-border h-[400px] flex items-center justify-center bg-practo-primary/5">
+        <p className="text-sm text-practo-text-muted">No providers to display on map</p>
+      </div>
+    );
+  }
+
+  const lats = providers.map((p) => p.lat);
+  const lngs = providers.map((p) => p.lng);
+  const minLat = Math.min(...lats);
+  const maxLat = Math.max(...lats);
+  const minLng = Math.min(...lngs);
+  const maxLng = Math.max(...lngs);
+  const latPad = (maxLat - minLat) * 0.15 || 0.01;
+  const lngPad = (maxLng - minLng) * 0.15 || 0.01;
+
+  const viewBox = [
+    minLng - lngPad,
+    maxLat + latPad,
+    (maxLng - minLng) + lngPad * 2,
+    (maxLat - minLat) + latPad * 2,
+  ].join(" ");
+
+  const toX = (lng: number) =>
+    ((lng - (minLng - lngPad)) / ((maxLng - minLng) + lngPad * 2)) * 100;
+  const toY = (lat: number) =>
+    ((maxLat + latPad - lat) / ((maxLat - minLat) + latPad * 2)) * 100;
+
+  return (
+    <div className="rounded-2xl border border-practo-border h-[400px] relative overflow-hidden bg-practo-primary/5">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox={viewBox}
+        preserveAspectRatio="xMidYMid slice"
+        className="block"
+        aria-label="Provider locations map"
+        role="img"
+      >
+        <defs>
+          <filter id="pinShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation={2} />
+            <feOffset dx={0} dy={1} result="offsetblur" />
+            <feComponentTransfer>
+              <feFuncA type="linear" slope={0.3} />
+            </feComponentTransfer>
+            <feMerge>
+              <feMergeNode />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        {providers.map((p) => (
+          <a
+            key={p.id}
+            href={`/provider/${p.id}`}
+            target="_blank"
+            rel="noopener"
+            className="block"
+          >
+            <circle
+              cx={toX(p.lng)}
+              cy={toY(p.lat)}
+              r="0.008"
+              fill={p.is24x7 ? "#b91c1c" : "#0f766e"}
+              filter="url(#pinShadow)"
+            />
+            <circle
+              cx={toX(p.lng)}
+              cy={toY(p.lat)}
+              r="0.003"
+              fill="white"
+            />
+            <title>{p.name}</title>
+          </a>
+        ))}
+      </svg>
+      <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1 pointer-events-none">
+        <span className="flex items-center gap-1 text-[10px] font-bold text-practo-text bg-practo-surface/90 px-2 py-1 rounded border border-practo-border/50">
+          <span className="w-1.5 h-1.5 rounded-full bg-practo-emergency" /> 24×7
+        </span>
+        <span className="flex items-center gap-1 text-[10px] font-bold text-practo-text bg-practo-surface/90 px-2 py-1 rounded border border-practo-border/50">
+          <span className="w-1.5 h-1.5 rounded-full bg-practo-primary" /> All providers
+        </span>
+      </div>
     </div>
   );
 }

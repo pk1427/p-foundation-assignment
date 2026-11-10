@@ -5,16 +5,19 @@ import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { FilterBottomSheet } from "@/components/practo/filter-bottom-sheet";
 import { Button } from "@/components/shared/button";
+import { cn } from "@/lib/utils";
 import type { ProviderFilters } from "@/data/models";
 
 interface FilterTriggerProps {
   current: ProviderFilters;
   activeCount: number;
+  className?: string;
 }
 
 export function FilterTrigger({
   current,
   activeCount,
+  className,
 }: FilterTriggerProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -37,7 +40,7 @@ export function FilterTrigger({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 w-full lg:w-auto">
+    <div className={cn("flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 w-full lg:w-auto", className)}>
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
