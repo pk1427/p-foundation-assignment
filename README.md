@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pawzz Foundation — Intern Assignment
 
-## Getting Started
+Two live prototypes in a single Next.js app, deployed to one Vercel project:
 
-First, run the development server:
+- **Practo for Animals** — `/` (provider discovery marketplace)
+- **AI course landing page** — `/ai-course`
+
+## Tech stack
+
+- Next.js 16 (App Router), TypeScript, Tailwind CSS v4, ESLint
+- Package manager: **pnpm**
+- Icons: lucide-react; Fonts: next/font/google (Inter, Plus Jakarta Sans)
+- Forms: Next.js Route Handlers with zod validation, forwarding to webhook URLs from env vars (`LEAD_WEBHOOK_URL`, `CORRECTION_WEBHOOK_URL`, `LISTING_WEBHOOK_URL`). Falls back to server console logging when env vars are missing.
+- No database, no auth, no external images (inline SVG, emoji, lucide icons only)
+
+## How to run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install        # or npm install
+cp .env.example .env.local  # optional; webhook URLs only needed for real submissions
+pnpm dev            # dev server at http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit:
+- `http://localhost:3000/` — Practo for Animals homepage
+- `http://localhost:3000/search` — search results with filters
+- `http://localhost:3000/provider/[id]` — provider profile
+- `http://localhost:3000/list-your-business` — provider onboarding
+- `http://localhost:3000/submit-correction` — correction form
+- `http://localhost:3000/ai-course` — AI course landing page
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Verification
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm run build   # typecheck + production build
+pnpm run lint    # ESLint
+```
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Both products share one codebase via route groups: `src/app/(practo)` and `src/app/(course)`.
+- All provider data is fictional sample data in `src/data/providers.ts`.
+- The carousel workflow (Stage 3 of the assignment) lives outside this codebase per the implementation guide.

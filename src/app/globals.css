@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Practo for Animals — warm teal/green on cream */
+  --color-practo-primary: #0f766e;
+  --color-practo-primary-hover: #115e59;
+  --color-practo-primary-light: #ccfbf1;
+  --color-practo-bg: #fdfaf7;
+  --color-practo-surface: #ffffff;
+  --color-practo-text: #2d3736;
+  --color-practo-text-muted: #6b7280;
+  --color-practo-border: #e7e5e4;
+  --color-practo-emergency: #b91c1c;
+  --color-practo-open: #15803d;
+  --color-practo-open-light: #dcfce7;
+  --color-practo-closed: #64748b;
+  --color-practo-verified: #0f766e;
+
+  /* AI course — dark indigo base, one bright accent */
+  --color-course-bg: #0b1022;
+  --color-course-surface: #111833;
+  --color-course-accent: #22d3ee;
+  --color-course-accent-soft: rgba(34, 211, 238, 0.12);
+  --color-course-text: #f8fafc;
+  --color-course-text-muted: #94a3b8;
+  --color-course-border: rgba(255, 255, 255, 0.10);
+
+  /* Tokens */
+  --radius-card: 16px;
+  --radius-pill: 9999px;
+  --shadow-soft: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --shadow-card: 0 10px 15px -3px rgb(0 0 0 / 0.06), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-glow: 0 0 24px rgba(34, 211, 238, 0.15);
+  --spacing-section-y: 5rem;
+  --spacing-section-x: 1.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-practo-bg);
+  color: var(--color-practo-text);
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--color-practo-primary);
+}
+
+button {
+  font-family: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
