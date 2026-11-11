@@ -71,8 +71,8 @@ export default function PractoHome() {
         </div>
 
         <Container>
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div className="space-y-6">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <div className="space-y-6 lg:col-span-7">
               <span className="inline-flex items-center gap-2 rounded-full border border-practo-border/50 bg-practo-sage px-3 py-1 text-[10px] font-bold text-practo-amber uppercase tracking-wider">
                 Sample directory · demo data
               </span>
@@ -116,48 +116,84 @@ export default function PractoHome() {
               </div>
             </div>
 
-            <div className="hidden lg:block flex items-center justify-center">
-              {/* Hero product mock */}
-              <div className="relative w-full max-w-sm">
-                {/* Floating map card */}
-                <div className="absolute -top-4 left-4 w-48 h-40 rounded-xl border border-practo-border bg-practo-surface shadow-card p-3">
-                  <MapPin className="absolute top-2 left-2 w-3 h-3 text-practo-emergency" />
-                  <div className="flex items-center gap-1 mb-1">
-                    <div className="w-1.5 h-1.5 rounded-full bg-practo-emergency" />
-                    <span className="text-[10px] font-medium text-practo-text">24×7</span>
-                  </div>
-                  <div className="h-1 bg-practo-border/40 rounded w-1/3" />
-                  <div className="h-1 bg-practo-border/40 rounded w-1/2" />
+            <div className="hidden lg:block flex items-center justify-center lg:col-span-5">
+              {/* Hero product mock wrapper */}
+              <div className="relative w-full max-w-xs min-h-[420px] overflow-visible">
+                {/* Second smaller mock card behind (offset down-right, lower opacity) */}
+                <div className="absolute top-10 right-0 w-[70%] h-[55%] rounded-xl border border-practo-border/40 bg-practo-surface/60 shadow-card blur-sm opacity-80 z-0" aria-hidden="true">
+                  <div className="absolute inset-0 bg-white/50 rounded-xl" />
+                  <Stethoscope className="absolute top-4 left-4 w-6 h-6 text-practo-primary/50" />
+                  <div className="absolute top-12 left-4 w-1/2 h-1 bg-practo-border/40 rounded" />
+                  <div className="absolute top-18 left-4 w-1/3 h-1 bg-practo-border/40 rounded" />
+                  <div className="absolute top-26 left-4 w-1/4 h-1 bg-practo-border/40 rounded" />
                 </div>
-                {/* Main card stack */}
-                <div className="relative w-full h-[320px] rounded-xl border border-practo-border bg-practo-surface shadow-card p-4 flex flex-col">
+
+                {/* Small map card at top-left */}
+                <div className="absolute -top-6 left-0 z-10 w-48 h-32 rounded-xl border border-practo-border bg-practo-surface shadow-card p-3">
+                  <MapPin className="absolute top-2 left-2 w-3 h-3 text-practo-emergency" />
+                  <div className="mt-6 space-y-1.5">
+                    <div className="h-3 bg-practo-border/40 rounded w-1/2" />
+                    <div className="h-3 bg-practo-border/40 rounded w-1/3" />
+                    <div className="flex items-center gap-1.5 text-[10px] font-medium">
+                      <div className="w-1.5 h-1.5 rounded-full bg-practo-emergency" />
+                      <span>24×7</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Main provider mock card */}
+                <div className="relative z-10 w-full h-[340px] rounded-xl border border-practo-border bg-practo-surface shadow-card p-5 flex flex-col">
+                  <div className="absolute top-3 right-3 z-20 rounded-full bg-practo-emergency text-white px-2 py-0.5 text-[10px] font-bold tracking-tight shadow-sm -rotate-3">
+                    24×7 Emergency
+                  </div>
                   <div className="flex items-center justify-between mb-3">
                     <Stethoscope className="w-5 h-5 text-practo-primary" />
                     <span className="text-[10px] font-bold text-practo-emergency">24×7</span>
                   </div>
-                  <h4 className="font-bold text-practo-text text-sm mb-2 line-clamp-1">
+                  <h4 className="font-bold text-practo-text text-sm mb-1.5 line-clamp-2">
                     Green Paws Animal Hospital
                   </h4>
-                  <div className="flex items-center gap-1.5 mb-3">
+                  <div className="flex items-center gap-1.5 mb-2">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-500" />
                     <span className="text-xs font-bold text-practo-text">4.8</span>
                     <span className="text-[10px] text-practo-text-muted">(210)</span>
                   </div>
-                  <div className="h-2 bg-practo-border/40 rounded w-1/2 mb-2" />
-                  <div className="h-2 bg-practo-border/40 rounded w-1/3 mb-3" />
-                  <div className="flex items-center gap-2 mt-auto">
-                    <Button variant="outline" size="sm" className="flex-1">
-                      <Phone className="w-4 h-4 shrink-0" />
+                  <div className="flex items-center gap-2 text-[10px] text-practo-text-muted mb-3">
+                    <MapPin className="w-3 h-3 shrink-0" />
+                    <span className="truncate">Sector 14, Gurugram</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    <span className="inline-flex items-center gap-1 rounded bg-practo-open-light text-practo-open px-2 py-0.5 text-[10px] font-semibold">
+                      Open
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded bg-white text-practo-primary px-2 py-0.5 text-[10px] font-semibold border border-practo-primary/20">
+                      Verified
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded bg-practo-surface border border-practo-border/40 px-2 py-0.5 text-[10px] font-medium text-practo-text-muted">
+                      2.1 km
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    <span className="px-2 py-1 rounded border border-practo-border/50 text-[10px] font-medium text-practo-text-muted bg-practo-primary/5">
+                      Emergency care
+                    </span>
+                    <span className="px-2 py-1 rounded border border-practo-border/50 text-[10px] font-medium text-practo-text-muted bg-practo-primary/5">
+                      Surgery
+                    </span>
+                    <span className="px-2 py-1 rounded border border-practo-border/50 text-[10px] font-medium text-practo-text-muted bg-practo-primary/5">
+                      ICU
+                    </span>
+                  </div>
+                  <div className="mt-auto grid grid-cols-2 gap-2">
+                    <Button variant="outline" size="sm" className="w-full h-11">
+                      <Phone className="w-4 h-4 shrink-0 mr-1.5" />
                       Call
                     </Button>
-                    <Button variant="primary" size="sm" className="flex-1">
+                    <Button variant="primary" size="sm" className="w-full h-11">
+                      <MapPin className="w-4 h-4 shrink-0 mr-1.5" />
                       Directions
                     </Button>
                   </div>
-                </div>
-                {/* Floating emergency chip */}
-                <div className="absolute bottom-6 right-6 rounded-xl border border-practo-emergency bg-practo-emergency text-white px-3 py-2 text-xs font-bold shadow-card">
-                  24×7 Emergency
                 </div>
               </div>
             </div>
